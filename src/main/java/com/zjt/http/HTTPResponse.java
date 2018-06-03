@@ -51,6 +51,8 @@ public class HTTPResponse {
         outputStream.write(("Content-Type: " + contentType + "\r\n").getBytes(charset));
         outputStream.write(("Cache-Control: no-cache\r\n").getBytes(charset));
         outputStream.write(("Content-Length: " + contentLength + "\r\n").getBytes(charset));
+        // outputStream.write("Connection: keep-alive\r\n".getBytes(charset));
+        // outputStream.write("Keep-Alive: timeout=10\r\n".getBytes(charset));
         if(isGzip)
             outputStream.write("Content-Encoding: gzip\r\n".getBytes(charset));
         outputStream.write("Accept-Ranges: bytes\r\n\r\n".getBytes(charset));
@@ -71,7 +73,6 @@ public class HTTPResponse {
     }
 
     public void writeAndFlush(byte[] array)throws IOException{
-        responseHeader();
         writeAndFlush(array, 0, array.length);
         flush();
     }
@@ -84,7 +85,7 @@ public class HTTPResponse {
 
     public void writeAndFlush(InputStream inputStream)throws IOException {
         responseHeader();
-        byte[] in = new byte[1024 * 10];
+        byte[] in = new byte[1024];
         int len = 0;
         while((len = inputStream.read(in)) > 0){
             outputStream.write(in, 0, len);
