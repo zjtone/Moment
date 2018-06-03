@@ -51,13 +51,11 @@ public class Moment implements Runnable {
                 }
             }
             while(running){
-                System.out.println("running: ");
                 final Socket socket = mServerSocket.accept();
-                final InputStream in = socket.getInputStream();
                 execute(new Runnable(){
                     public void run(){
                         try{
-                            mHandler.read(in, socket.getOutputStream());
+                            mHandler.read(socket.getInputStream(), socket.getOutputStream());
                         }catch(IOException e){
                             e.printStackTrace();
                         }catch(Exception e){
