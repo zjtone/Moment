@@ -21,7 +21,6 @@ public class HTTPHandler implements IHandler {
                     length += read_len;
                 }
                 if(length > 0){
-                    System.out.println("" + new String(read));
                     HTTPRequest request = new HTTPRequest(read);
                     HTTPResponse response = new HTTPResponse(outputStream);
                     Api api;
