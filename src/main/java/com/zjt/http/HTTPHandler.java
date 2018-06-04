@@ -13,17 +13,15 @@ public class HTTPHandler implements IHandler {
         InputStream inputStream = socket.getInputStream();
         OutputStream outputStream = socket.getOutputStream();
         long startTime = System.currentTimeMillis();
-        while(!socket.isClosed() && startTime + 1000 > System.currentTimeMillis()){
+        while(!socket.isClosed() && startTime + 10000 > System.currentTimeMillis()){
             try{
                 int length = 0, read_len = -1;
                 while(length < totalLength && inputStream.available() > 0 && 
                     (read_len = inputStream.read(read, length, totalLength - length)) > 0){
                     length += read_len;
                 }
-                // if(length <= 0){
-                //     continue;
-                // }
                 if(length > 0){
+                    System.out.println("" + new String(read));
                     HTTPRequest request = new HTTPRequest(read);
                     HTTPResponse response = new HTTPResponse(outputStream);
                     Api api;
@@ -35,9 +33,10 @@ public class HTTPHandler implements IHandler {
                     }
                     if(api != null)
                         api.response(request, response);
+                    break;
                 }
             }catch(IOException e){
-                 break;
+                //  break;
             }
         }
         inputStream.close();

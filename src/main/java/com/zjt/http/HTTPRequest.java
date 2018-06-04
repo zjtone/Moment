@@ -6,6 +6,7 @@ public class HTTPRequest {
     private HashMap<String, String> mHashMap;
     private String method = "", uri = "";
     private byte[] mContent;
+    private boolean isGzip, isKeepAlive;
 
     public HTTPRequest(){
         mHashMap = new HashMap<>();
@@ -31,10 +32,25 @@ public class HTTPRequest {
         if(headers != null){
             for(String h: headers){
                 String[] str = h.split(":");
-                if(str != null)
+                if(str != null){
                     mHashMap.put(str[0].trim(), str[1].trim());
+                    if(str[0].equalsIgnoreCase("Accept-Encoding") && str[1].contains("gzip")){
+                        isGzip = true;
+                    }
+                    if(str[0].equalsIgnoreCase("Connection") && str[1].equalsIgnoreCase("keep-alive")){
+                        isKeepAlive = true;
+                    }
+                }
             }
         }
+    }
+
+    public boolean gzip(){
+        return isGzip;
+    }
+
+    public boolean keepAlive(){
+        return isKeepAlive;
     }
 
     public byte[] content(){

@@ -52,7 +52,6 @@ public class Moment implements Runnable {
             }
             while(running){
                 final Socket socket = mServerSocket.accept();
-                System.out.println("" + socket);
                 execute(new Runnable(){
                     public void run(){
                         try{
