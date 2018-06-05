@@ -19,9 +19,9 @@ public class HTTPHandler implements IHandler {
                 HTTPRequest request = new HTTPRequest(inputStream);
                 HTTPResponse response = new HTTPResponse(outputStream);
                 Api api;
-                if(request.method().toLowerCase().equals("get"))
+                if(request.method().toLowerCase().equals("get")) {
                     api = Dispatcher.getInstance().get(request.uri());
-                else{
+                }else {
                     api = Dispatcher.getInstance().post(request.uri());
                 }
                 if(api == null && mDefaultApi != null){
