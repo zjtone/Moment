@@ -13,12 +13,12 @@ public class Moment implements Runnable {
     private IHandler mHandler = new DiscardHandler();
     private IThreadPool mThreadPool = null;
     private int[] ports;
-    private int[] binded;
+    private int[] hasBind;
 
     public Moment(int[] ports) throws IOException{
         if(ports == null)throw new NullPointerException();
         this.ports = ports;
-        binded = new int[ports.length];
+        hasBind = new int[ports.length];
     }
 
     public Moment handler(IHandler handler){
@@ -42,8 +42,8 @@ public class Moment implements Runnable {
         mThreadPool.submit(runnable);
     }
 
-    public int[] binded(){
-        return binded;
+    public int[] hasBind(){
+        return hasBind;
     }
 
     public void run(){
@@ -51,10 +51,10 @@ public class Moment implements Runnable {
             for(int p = 0 ; p < ports.length ; p++){
                 try{
                     mServerSocket = new ServerSocket(ports[p]);
-                    binded[p] = 1;
+                    hasBind[p] = 1;
                     break;
                 }catch(BindException e){
-                    binded[p] = -1;
+                    hasBind[p] = -1;
                     e.printStackTrace();
                 }
             }
