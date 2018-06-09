@@ -17,6 +17,14 @@ public class Moment implements Runnable {
     public Moment(int[] ports) throws IOException{
         if(ports == null)throw new NullPointerException();
         this.ports = ports;
+        for(int p = 0 ; p < ports.length ; p++){
+            try{
+                mServerSocket = new ServerSocket(ports[p]);
+                break;
+            }catch(BindException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     public Moment handler(IHandler handler){
@@ -46,14 +54,6 @@ public class Moment implements Runnable {
 
     public void run(){
         try{
-            for(int p = 0 ; p < ports.length ; p++){
-                try{
-                    mServerSocket = new ServerSocket(ports[p]);
-                    break;
-                }catch(BindException e){
-                    e.printStackTrace();
-                }
-            }
             while(running){
                 final Socket socket = mServerSocket.accept();
                 execute(new Runnable(){
