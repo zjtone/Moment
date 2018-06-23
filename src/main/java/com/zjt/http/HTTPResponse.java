@@ -60,6 +60,7 @@ public class HTTPResponse {
         outputStream.write(("Content-Type: " + contentType + "\r\n").getBytes(charset));
         outputStream.write(("Cache-Control: no-cache\r\n").getBytes(charset));
         outputStream.write("Accept-Ranges: bytes\r\n".getBytes(charset));
+        outputStream.write("Access-Control-Allow-Origin: *\r\n".getBytes(charset));
         if(isKeepAlive){
             outputStream.write("Connection: keep-alive\r\n".getBytes(charset));
             outputStream.write("Keep-Alive: timeout=10\r\n".getBytes(charset));

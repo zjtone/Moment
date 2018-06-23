@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.io.InputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 public class HTTPRequest {
     private HashMap<String, String> mHashMap;
@@ -26,7 +27,7 @@ public class HTTPRequest {
         int index = header.indexOf(" ");
         method = header.substring(0, index);
         int newIndex = header.indexOf(" ", index + 1);
-        uri = header.substring(index + 1, newIndex);
+        uri = URLDecoder.decode(header.substring(index + 1, newIndex), "utf-8");
         index = header.indexOf("\r\n");
         header = header.substring(index + 2);
         String[] headers = header.split("\r\n");
